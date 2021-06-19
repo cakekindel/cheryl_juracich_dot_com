@@ -29,7 +29,7 @@ router req = do
                assetsResponse <- Assets.handle req
 
                let maybeResp = apiResponse <|> assetsResponse
-               let fallback = \_ -> Assets.indexHtml >>= Http.ok
+               let fallback = \_ -> Assets.indexHtml >>= Http.ok' (Http.header "content-type" "text/html")
 
                resp <- maybe' fallback pure maybeResp
 
